@@ -2,14 +2,14 @@ let debounce_timeout;
 let throttle_timeout;
 let throttle_previous = 0;
 export default {
-  getPageParam:function (param_key) { // 获取网页的参数
+  getPageParam (param_key) { // 获取网页的参数
     // param_key:要获取参数的key
     var reg = new RegExp("(^|&)" + param_key + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
     if (r != null) return unescape(r[2]);
     return null;
   },
-  operatCookie:function (type, key, value, expir_millisecond) { // 操作cookie
+  operatCookie (type, key, value, expir_millisecond) { // 操作cookie
     /**
      * @params {string} *type 操作类型,'get','set,'del'
      * @params {string} *key 操作的cokkie的key
@@ -46,7 +46,7 @@ export default {
       return value
     }
   },
-  amountFormat:function(val){ // 金钱格式化(千分位加,)
+  amountFormat(val){ // 金钱格式化(千分位加,)
     let value = Number(val)
     let num = Number(value.toFixed(8));
     return num.toString().replace(/\d+/, function (n) {
@@ -57,7 +57,7 @@ export default {
       });
     });
   },
-  deepCopy:function(obj){ // 深拷贝
+  deepCopy(obj){ // 深拷贝
     let copyObj = Array.isArray(obj) ? [] : {};
     for(let key in obj){
         if( obj.hasOwnProperty(key) ){
@@ -66,7 +66,7 @@ export default {
     }
     return copyObj;
   },
-  getDiffArr:function (arr1, arr2) { // 获取两数组中不同的值,并返回新数组
+  getDiffArr (arr1, arr2) { // 获取两数组中不同的值,并返回新数组
     let arr3 = [];
     for (let i = 0; i < arr1.length; i++) {
       let pass = true;
@@ -82,7 +82,7 @@ export default {
     }
     return arr3;
   },
-  mergeSameObj:function (arr, key) { // 获取数组中对象key相同的项,融合为新数组并返回
+  mergeSameObj (arr, key) { // 获取数组中对象key相同的项,融合为新数组并返回
     let obj = {},
     newArr = [];
     arr.forEach((item, index) => {
@@ -102,7 +102,7 @@ export default {
     });
     return newArr;
   },
-  cumNumberFromArrSameItem:function(data_arr,judg_key,number_key){ // 合并数组中对象的key相同的项,并相加数组中需要累加的key
+  cumNumberFromArrSameItem(data_arr,judg_key,number_key){ // 合并数组中对象的key相同的项,并相加数组中需要累加的key
     let key_arr = []; //定义空数组，用于装载去重之后的数组，
     let data_obj = {}; //定义空对象，用于数组转换成对象
     data_arr.forEach(item => { 
@@ -119,7 +119,7 @@ export default {
     })
     return end_data;
   },
-  calculateCarousel:function (allData, eachPageNum) {// 计算轮播图每张显示几条数据
+  calculateCarousel (allData, eachPageNum) {// 计算轮播图每张显示几条数据
     // allData[所有数据]eachPageNum[每页显示几条]
     let eachPageItem = eachPageNum; // 每张轮播图显示几条数据
     let PageNum = Math.ceil(allData.length / eachPageItem); // 共有多少页
@@ -131,7 +131,7 @@ export default {
     }
     return finshArr;
   },
-  randomString:function (num) { // 随机生成由数字和大小写英文字母组成的字符串
+  randomString (num) { // 随机生成由数字和大小写英文字母组成的字符串
     // num生成的数量
     var backArr = new Array();
     var arr = new Array();
@@ -150,7 +150,7 @@ export default {
     let val = backArr.join("");
     return val;
   },
-  randomNumber:function (minNum, maxNum) {// 随机生成指定范围数字
+  randomNumber (minNum, maxNum) {// 随机生成指定范围数字
     // minNum, maxNum[最小数,最大数]
     switch (arguments.length) {
       case 1:
@@ -161,7 +161,7 @@ export default {
         return 0;
     }
   },
-  translateArray:function(array,targetkey) {// 根据一维数组的key将其转化为二维数组
+  translateArray(array,targetkey) {// 根据一维数组的key将其转化为二维数组
     let map1 = {}
     while(array.length) {
     let current = array.pop() // 会影响原数组
@@ -171,7 +171,7 @@ export default {
     }
     return Object.keys(map1).map(key => map1[key])
   },
-  visitDevice:function(should_console_show=false){ // 判断用户登录的设备
+  visitDevice(should_console_show=false){ // 判断用户登录的设备
     let ua = window.navigator.userAgent;
     let app = window.navigator.appVersion;
     let device_str = '未知';
@@ -192,7 +192,7 @@ export default {
     }
     return device_str
   },
-  debounce:function (func,wait,immediate = true) {// 防抖：在n秒内函数只能执行一次，如果在 n 秒内又触发了事件，则会重新计算函数执行时间
+  debounce (func,wait,immediate = true) {// 防抖：在n秒内函数只能执行一次，如果在 n 秒内又触发了事件，则会重新计算函数执行时间
     // {func:回调函数,wait:等待时间ms,immediate:是否立即执行}
     return function () {
       let context = this;
@@ -212,7 +212,7 @@ export default {
       }
     }
   },
-  throttle:function (func, wait ,type = 'timestamp') {// 节流:在 n 秒中只执行一次函数
+  throttle (func, wait ,type = 'timestamp') {// 节流:在 n 秒中只执行一次函数
     // {func:回调函数,wait:等待时间ms,type:时间戳版本或计时器版本}
     return function() {
       let context = this;
@@ -234,7 +234,7 @@ export default {
       }
     }
   },
-  exportFile:function(file,file_name,file_type = "xlsx"){ // 导出通过接口返回的blob文件流
+  exportFile(file,file_name,file_type = "xlsx"){ // 导出通过接口返回的blob文件流
     const blob = new Blob([file], { type: file_type })
     if ('download' in document.createElement('a')) {  // 非IE下载
       let fileName = `${file_name}.${file_type}`;
@@ -250,7 +250,7 @@ export default {
       navigator.msSaveBlob(blob);
     }
   },
-  downloadFile:function(href, file_name,file_type){ // 通过a标签下载后台返回的文件地址
+  downloadFile(href, file_name,file_type){ // 通过a标签下载后台返回的文件地址
     // 获取heads中的filename文件名
     let fileName = `${file_name}.${file_type}`;
     let a = document.createElement("a");
@@ -266,7 +266,7 @@ export default {
     // 下载完成移除元素
     document.body.removeChild(a);
   },
-  preLoadImg:function(img_url = [],type='all'){ // 预加载图片
+  preLoadImg(img_url = [],type='all'){ // 预加载图片
     if(type == "all"){ // 加载所有
       let idx = 0;
       for (let i = 0; i < img_url.length; i++) {
@@ -295,7 +295,7 @@ export default {
       preLoad()
     }
   },
-  objEqual:function(a, b){ // 对比两个对象是否一致
+  objEqual(a, b){ // 对比两个对象是否一致
     if (Object.keys(a).length !== Object.keys(b).length) {
       return false
     }
@@ -318,7 +318,7 @@ export default {
     }
     return true
   },
-  checkFileType:function(file_extension){ // 判断文件类型
+  checkFileType(file_extension){ // 判断文件类型
     let file_type; // 文件类型
     const img_format = ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp', 'psd', 'svg', 'tiff']; // 图片的格式
     const video_format = ['mp4','avi','rmvb','wmv','mpg','mpeg','swf','flv','mov']; // 图片的格式
@@ -330,5 +330,13 @@ export default {
     else if (book_format.includes(file_extension)){ file_type = 'book'  } 
     else { file_type = 'other' }
     return file_type
+  },
+  getBase64(file) { // 获取文件的base64格式
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
   }
 }
