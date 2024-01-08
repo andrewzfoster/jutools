@@ -1,6 +1,6 @@
 {
   "name": "aw-util",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "一个根据个人经验持续增加的工具函数",
   "main": "index.js",
   "scripts": {
