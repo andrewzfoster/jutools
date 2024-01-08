@@ -1,6 +1,3 @@
-let debounce_timeout;
-let throttle_timeout;
-let throttle_previous = 0;
 export default {
   getPageParam (param_key) { // 获取网页的参数
     // param_key:要获取参数的key
@@ -194,6 +191,7 @@ export default {
   },
   debounce (func,wait,immediate = true) {// 防抖：在n秒内函数只能执行一次，如果在 n 秒内又触发了事件，则会重新计算函数执行时间
     // {func:回调函数,wait:等待时间ms,immediate:是否立即执行}
+    let debounce_timeout = null;
     return function () {
       let context = this;
       let args = arguments;
@@ -214,6 +212,8 @@ export default {
   },
   throttle (func, wait ,type = 'timestamp') {// 节流:在 n 秒中只执行一次函数
     // {func:回调函数,wait:等待时间ms,type:时间戳版本或计时器版本}
+    let throttle_timeout = null;
+    let throttle_previous = 0;
     return function() {
       let context = this;
       let args = arguments;
@@ -338,5 +338,36 @@ export default {
       reader.onload = () => resolve(reader.result);
       reader.onerror = error => reject(error);
     });
-  }
+  },
+  queueArr(arr, size) { // 根据数组随机排列的算法
+    // size 生成几个
+    if (size > arr.length) { return }
+    let allResult = [];
+    (function fn(arr, size, result) {
+      if (result.length == size) {
+        // 去重
+        let is_repate = false;
+        if(allResult.length > 0 ){
+          allResult.forEach( arr => {
+            if(arr.join() == result.join()){
+              is_repate = true
+            }
+          })
+          if(is_repate != true){
+            allResult.push(result)
+          }
+        }else{
+          allResult.push(result)
+        }
+      } else {
+        let len = arr.length;
+        for (let i = 0; i < len; i++) {
+          let newArr = [].concat(arr);
+          let curItem = newArr.splice(i, 1);
+          fn(newArr, size, [].concat(result, curItem))
+        }
+      }
+    })(arr, size, [])
+    return allResult
+  },
 }
