@@ -340,7 +340,7 @@ export default {
     });
   },
   queueArr(arr, size) { // 根据数组随机排列的算法
-    // size 生成几个
+    // arr 目标数组 size 生成的个数
     if (size > arr.length) { return }
     let allResult = [];
     (function fn(arr, size, result) {
