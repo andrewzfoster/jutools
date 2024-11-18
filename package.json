@@ -2,16 +2,12 @@
   "name": "jutools",
   "version": "1.0.2",
   "description": "聚兔",
-  "main": "dist/index.cjs.js",
+  "main": "dist/index.esm.js",
   "module": "dist/index.esm.js",
   "type": "module",
   "files": [
     "dist/"
   ],
-  "exports": {
-    "import": "./dist/index.esm.js",
-    "require": "./dist/index.cjs.js"
-  },
   "keywords": [
     "utils",
     "javascript",

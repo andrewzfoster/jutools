@@ -9,14 +9,10 @@ export default defineConfig({
   input: 'src/index.js', // 你的入口文件
   output: [
     {
-      file: 'dist/index.cjs.js',
-      format: 'cjs', // CommonJS 格式
-      exports: 'auto', // 自动导出
-    },
-    {
-      file: 'dist/index.esm.js',
-      format: 'es', // ESM 格式
-    },
+      file: 'dist/index.esm.js',  // 输出 ESM 格式的文件
+      format: 'es',               // 指定 ESM 格式
+      sourcemap: false,            // 启用 sourcemap（方便调试）
+    }
   ],
   plugins: [
     del({ targets: 'dist/*' }),  // 在打包前清理 dist 目录
