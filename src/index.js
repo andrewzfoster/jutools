@@ -8,10 +8,10 @@ import * as cookieUtils from './cookie';
 import * as objectUtils from './object';
 import * as toolUtils from './tool';
 
-const awtool = {
+const jutools = {
   ...arrayUtils,
   ...cookieUtils,
   ...objectUtils,
   ...toolUtils,
 }
-export default awtool
+export default jutools
