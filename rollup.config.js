@@ -12,7 +12,19 @@ export default defineConfig({
       file: 'dist/index.esm.js',  // 输出 ESM 格式的文件
       format: 'es',               // 指定 ESM 格式
       sourcemap: false,            // 启用 sourcemap（方便调试）
-    }
+    },
+    {
+      file: 'dist/index.cjs.js',  // CommonJS格式的输出
+      format: 'cjs',
+      sourcemap: false,  // 是否生成sourcemap
+    },
+    {
+      file: 'dist/pixelfit.min.js',  // 压缩版
+      format: 'umd',
+      sourcemap: false,
+      name:'jutools',
+      plugins: [terser()],  // 使用terser插件压缩代码
+    },
   ],
   plugins: [
     del({ targets: 'dist/*' }),  // 在打包前清理 dist 目录
