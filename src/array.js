@@ -119,3 +119,60 @@ export function queueArr(arr, size) {
   })(arr, size, []);
   return allResult;
 }
+
+// 根据 数组随机排列 算法
+export function queue(arr, size) {
+  if (size > arr.length) return [];
+  const allResult = new Set(); // 用 Set 来存储组合，自动去重
+  const result = [];
+  function generate(arr, size, result) {
+    if (result.length === size) {
+      allResult.add(result.join(",")); // 使用逗号分隔符来避免数组形式比较
+      return;
+    }
+    for (let i = 0; i < arr.length; i++) {
+      generate(
+        arr.slice(0, i).concat(arr.slice(i + 1)),
+        size,
+        result.concat(arr[i])
+      );
+    }
+  }
+  generate(arr, size, result);
+  // 从 Set 中提取结果并格式化
+  return Array.from(allResult).map((item) => item.split(",").map(Number));
+}
+
+// 多选球生成算法
+export function multipleBallNum(selected_ball) {
+  const num_arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  let all_ball_arr = [];
+  // 根据用户选择的球的个数进行处理
+  if (selected_ball.length === 1) {
+    for (let i = 0; i < num_arr.length; i++) {
+      for (let j = i; j < num_arr.length; j++) {
+        all_ball_arr.push([selected_ball[0], num_arr[i], num_arr[j]]);
+      }
+    }
+  } else if (selected_ball.length === 2) {
+    for (let i = 0; i < num_arr.length; i++) {
+      all_ball_arr.push([num_arr[i], selected_ball[1], selected_ball[0]]);
+    }
+  } else if (selected_ball.length === 3) {
+    all_ball_arr.push(selected_ball);
+  }
+  // 使用 queue 生成所有的排列
+  let allResult = [];
+  all_ball_arr.forEach((item) => {
+    allResult = allResult.concat(queue(item, 3));
+  });
+  // 排序并返回结果
+  return allResult
+    .map((item) => ({
+      id: item.join(""),
+      ball1: item[0],
+      ball2: item[1],
+      ball3: item[2],
+    }))
+    .sort((a, b) => Number(a.id) - Number(b.id));
+}
